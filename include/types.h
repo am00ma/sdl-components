@@ -12,6 +12,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <time.h>
 #include <errno.h> // IWYU pragma: keep
 #include <SDL2/SDL.h>
 
@@ -129,5 +130,15 @@ typedef double   f64;
         p_error(__VA_ARGS__);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \
         __builtin_trap();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      \
     }
+
+
+/* ---------------------------------------------------------------------------
+ *  Timing
+ * ------------------------------------------------------------------------- */
+
+#define Timestamp(t) struct timespec t; clock_gettime(CLOCK_MONOTONIC, &t)
+#define ToSec(  t) ((f32)t.tv_sec + (f32)t.tv_nsec / 1e9)
+#define ToMilli(t) ((u64)t.tv_sec * 1e6 + (u64)t.tv_nsec / 1e3)
+#define ToNano( t) ((u64)t.tv_sec * 1e9 + (u64)t.tv_nsec)
 
 // clang-format on

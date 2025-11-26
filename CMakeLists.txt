@@ -78,6 +78,7 @@ pkg_search_module(SDL2IMAGE REQUIRED SDL2_image)
 #                     Common
 # =========================================================================
 set(LIB_SOURCES
+    ${CMAKE_SOURCE_DIR}/src/window.c
     ${CMAKE_SOURCE_DIR}/src/component.c)
 set(LIB_INCLUDES ${CMAKE_SOURCE_DIR}/include)
 set(LIB_LIBS
