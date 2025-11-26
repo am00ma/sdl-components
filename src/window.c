@@ -3,15 +3,15 @@
 #include "constants.h"
 #include "draw.h"
 #include "style.h"
-#include <SDL2/SDL_stdinc.h>
 
-int sdlx_window_init(sdlx_window_t* w, u32 width, u32 height)
+int sdlx_window_init(sdlx_window_t* w, u32 width, u32 height, void* data)
 {
     int err;
 
     w->quit   = false;
     w->width  = width;
     w->height = height;
+    w->data   = data;
 
     err = SDL_Init(SDL_INIT_VIDEO);
     Goto(err, __close, "Failed: SDL_Init");
@@ -74,6 +74,21 @@ void sdlx_window_update(sdlx_component_t*, SDL_Event event, void* data)
         case SDLK_ESCAPE: w->quit = true; break;
         }
     }
+
+    if (w->c.num_children)
+    {
+        RANGE(i, w->c.num_children) { w->c.children[i].update(&w->c.children[i], event, w->data); }
+    }
 }
 
-void sdlx_window_render(sdlx_component_t* c, SDL_Renderer* r, void*) { draw_filled(r, c->bounds, c->style.background); }
+void sdlx_window_render(sdlx_component_t* c, SDL_Renderer* r, void* data)
+{
+    sdlx_window_t* w = data;
+
+    draw_filled(r, c->bounds, c->style.background);
+
+    if (w->c.num_children)
+    {
+        RANGE(i, w->c.num_children) { w->c.children[i].render(&w->c.children[i], w->rnd, w->data); }
+    }
+}

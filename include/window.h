@@ -17,9 +17,12 @@ typedef struct
 
     sdlx_component_t c;
 
+    // User data to pass to components
+    void* data;
+
 } sdlx_window_t;
 
-int  sdlx_window_init(sdlx_window_t* w, u32 width, u32 height);
+int  sdlx_window_init(sdlx_window_t* w, u32 width, u32 height, void* data);
 void sdlx_window_destroy(sdlx_window_t* w);
 void sdlx_window_dump(sdlx_window_t* w);
 

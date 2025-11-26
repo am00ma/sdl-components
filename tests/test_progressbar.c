@@ -1,8 +1,12 @@
-/** @file test_progressbar.c
- *  @brief progressbar
+/** @file test_window.c
+ *  @brief Check how long it takes window to load
+ *
+ *  NOTE: Takes 3.1 secs :(
+ *        Apparently the delay is because of nvidia driver
+ *
  */
-#include "components/progressbar.h"
-#include "constants.h" // FPS, WIDTH, HEIGHT
+#include "components/progressbar.h" // sdlx_progressbar_t
+#include "constants.h"              // FPS, WIDTH, HEIGHT
 #include "window.h"
 
 int main()
@@ -10,8 +14,31 @@ int main()
     int err;
 
     sdlx_window_t w;
-    err = sdlx_window_init(&w, WIDTH, HEIGHT);
+    err = sdlx_window_init(&w, WIDTH, HEIGHT, 0);
     Goto(err, __close, "Failed: calloc sdlx_window_t* t");
+
+    sdlx_progressbar_t progress = {
+        .c =
+            {
+                .update         = sdlx_progressbar_update,
+                .render         = sdlx_progressbar_render,
+                .bounds         = w.c.bounds,
+                .style          = {.background = DARK_RED, .text = WHITE},
+                .parent         = nullptr,
+                .children       = nullptr,
+                .num_children   = 0,
+                .can_focus      = true,
+                .has_focus      = true,
+                .focussed_child = -1,
+            },
+        .p = {.min = 0.0, .max = 100.0},
+        .s = {.val = 50.0},
+    };
+    progress.c.p = &progress.p;
+    progress.c.s = &progress.s;
+
+    w.c.num_children = 1;
+    w.c.children     = &progress.c;
 
     sdlx_window_dump(&w);
 
@@ -23,19 +50,14 @@ int main()
     {
         frame_start = SDL_GetTicks();
 
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-            switch (event.type)
-            {
-            case SDL_QUIT: w.quit = true; break;
-            case SDL_KEYDOWN:
-                switch (event.key.keysym.sym)
-                {
-                case SDLK_ESCAPE: w.quit = true; break;
-                }
-            }
-        }
+        SDL_Event event = {};
+
+        sdlx_window_update(&w.c, event, &w); // Make sure it runs every frame
+
+        // Actually respond to keys -> only happens on key, not on 'idle'
+        while (SDL_PollEvent(&event)) { sdlx_window_update(&w.c, event, &w); }
+
+        sdlx_window_render(&w.c, w.rnd, &w);
 
         SDL_RenderPresent(w.rnd);
 

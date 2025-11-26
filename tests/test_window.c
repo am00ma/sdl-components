@@ -13,7 +13,7 @@ int main()
     int err;
 
     sdlx_window_t w;
-    err = sdlx_window_init(&w, WIDTH, HEIGHT);
+    err = sdlx_window_init(&w, WIDTH, HEIGHT, 0);
     Goto(err, __close, "Failed: calloc sdlx_window_t* t");
 
     sdlx_window_dump(&w);

@@ -12,6 +12,10 @@ typedef void (*RenderCallback)(sdlx_component_t* c, SDL_Renderer* r, void* data)
 
 typedef struct sdlx_component_t
 {
+    // Link to parent component
+    void* p; ///< Parameters
+    void* s; ///< State
+
     // Interaction
     UpdateCallback update;
     RenderCallback render;
