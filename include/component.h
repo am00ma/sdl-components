@@ -1,12 +1,28 @@
+/** @file component.h
+ *  @brief Generic component with layout, actions
+ */
 #pragma once
 
-#include "SDL2/SDL.h"
+#include "style.h"
 
-typedef struct {
+typedef struct sdlx_component_t sdlx_component_t;
 
-  SDL_Rect bounds;
+typedef struct sdlx_component_t
+{
 
-} sdlc_component_t;
+    // Layout
+    SDL_Rect     bounds;
+    sdlx_style_t style;
 
-int sdlc_component_open(sdlc_component_t **tp);
-int sdlc_component_close(sdlc_component_t *t);
+    // Children
+    sdlx_component_t* children;
+    isize             num_children;
+
+    // User data
+    void* data;
+
+} sdlx_component_t;
+
+int  sdlx_component_open(sdlx_component_t** tp, SDL_Rect bounds, sdlx_style_t style);
+void sdlx_component_close(sdlx_component_t* t);
+void sdlx_component_dump(sdlx_component_t* t);
