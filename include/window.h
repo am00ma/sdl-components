@@ -15,6 +15,6 @@ typedef struct
 
 } sdlx_window_t;
 
-int  sdlx_window_open(sdlx_window_t** wp, u32 width, u32 height);
-void sdlx_window_close(sdlx_window_t* w);
+int  sdlx_window_init(sdlx_window_t* w, u32 width, u32 height);
+void sdlx_window_destroy(sdlx_window_t* w);
 void sdlx_window_dump(sdlx_window_t* w);

@@ -9,6 +9,8 @@ typedef struct sdlx_component_t sdlx_component_t;
 
 typedef struct sdlx_component_t
 {
+    // User data
+    void* data;
 
     // Layout
     SDL_Rect     bounds;
@@ -18,11 +20,12 @@ typedef struct sdlx_component_t
     sdlx_component_t* children;
     isize             num_children;
 
-    // User data
-    void* data;
+    // Focus
+    bool  can_focus;
+    bool  has_focus;
+    isize focussed_child;
 
 } sdlx_component_t;
 
-int  sdlx_component_open(sdlx_component_t** tp, SDL_Rect bounds, sdlx_style_t style);
-void sdlx_component_close(sdlx_component_t* t);
+void sdlx_component_init(sdlx_component_t* t, SDL_Rect bounds, sdlx_style_t style);
 void sdlx_component_dump(sdlx_component_t* t);
