@@ -24,7 +24,7 @@ int main()
                 .render         = sdlx_progressbar_render,
                 .bounds         = w.c.bounds,
                 .style          = {.background = DARK_RED, .text = WHITE},
-                .parent         = nullptr,
+                .parent         = &w.c,
                 .children       = nullptr,
                 .num_children   = 0,
                 .can_focus      = true,
