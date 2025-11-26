@@ -1,18 +1,24 @@
 #include "window.h"
+#include "component.h"
+#include "constants.h"
+#include "draw.h"
+#include "style.h"
+#include <SDL2/SDL_stdinc.h>
 
 int sdlx_window_init(sdlx_window_t* w, u32 width, u32 height)
 {
     int err;
 
     w->quit   = false;
-    w->bounds = (SDL_Rect){0, 0, width, height};
+    w->width  = width;
+    w->height = height;
 
     err = SDL_Init(SDL_INIT_VIDEO);
     Goto(err, __close, "Failed: SDL_Init");
 
     SDL_ShowCursor(0);
 
-    w->win = SDL_CreateWindow("SDLX", 100, 100, w->bounds.w, w->bounds.h, SDL_WINDOW_SHOWN);
+    w->win = SDL_CreateWindow("SDLX", 100, 100, w->width, w->height, SDL_WINDOW_SHOWN);
     err    = -(!w->win);
     Goto(err, __close, "Failed: SDL_CreateWindow");
 
@@ -23,6 +29,19 @@ int sdlx_window_init(sdlx_window_t* w, u32 width, u32 height)
     SDL_RendererInfo info;
     SDL_GetRendererInfo(w->rnd, &info);
     p_info("Renderer: %s", info.name);
+
+    w->c = (sdlx_component_t){
+        .update         = sdlx_window_update,
+        .render         = sdlx_window_render,
+        .bounds         = {0, 0, w->width, w->height},
+        .style          = {.background = DARK_GREEN, .text = WHITE},
+        .parent         = nullptr,
+        .children       = nullptr,
+        .num_children   = 0,
+        .can_focus      = true,
+        .has_focus      = true,
+        .focussed_child = -1,
+    };
 
     return 0;
 
@@ -40,4 +59,21 @@ void sdlx_window_destroy(sdlx_window_t* w)
     SDL_Quit();
 }
 
-void sdlx_window_dump(sdlx_window_t* w) { p_info("  size (wh): %d, %d", w->bounds.w, w->bounds.h); }
+void sdlx_window_dump(sdlx_window_t* w) { p_info("  size (wh): %d, %d", w->width, w->height); }
+
+void sdlx_window_update(sdlx_component_t*, SDL_Event event, void* data)
+{
+    sdlx_window_t* w = data;
+
+    switch (event.type)
+    {
+    case SDL_QUIT: w->quit = true; break;
+    case SDL_KEYDOWN:
+        switch (event.key.keysym.sym)
+        {
+        case SDLK_ESCAPE: w->quit = true; break;
+        }
+    }
+}
+
+void sdlx_window_render(sdlx_component_t* c, SDL_Renderer* r, void*) { draw_filled(r, c->bounds, c->style.background); }

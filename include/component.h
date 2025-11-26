@@ -7,16 +7,21 @@
 
 typedef struct sdlx_component_t sdlx_component_t;
 
+typedef void (*UpdateCallback)(sdlx_component_t* c, SDL_Event e, void* data);
+typedef void (*RenderCallback)(sdlx_component_t* c, SDL_Renderer* r, void* data);
+
 typedef struct sdlx_component_t
 {
-    // User data
-    void* data;
+    // Interaction
+    UpdateCallback update;
+    RenderCallback render;
 
     // Layout
     SDL_Rect     bounds;
     sdlx_style_t style;
 
-    // Children
+    // Component tree
+    sdlx_component_t* parent;
     sdlx_component_t* children;
     isize             num_children;
 

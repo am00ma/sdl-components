@@ -79,7 +79,11 @@ pkg_search_module(SDL2IMAGE REQUIRED SDL2_image)
 # =========================================================================
 set(LIB_SOURCES
     ${CMAKE_SOURCE_DIR}/src/window.c
-    ${CMAKE_SOURCE_DIR}/src/component.c)
+    ${CMAKE_SOURCE_DIR}/src/component.c
+    ${CMAKE_SOURCE_DIR}/src/draw.c
+
+    ${CMAKE_SOURCE_DIR}/src/components/progressbar.c
+)
 set(LIB_INCLUDES ${CMAKE_SOURCE_DIR}/include)
 set(LIB_LIBS
   ${SDL2_LIBRARIES}

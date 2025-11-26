@@ -1,10 +1,7 @@
-/** @file test_window.c
- *  @brief Check how long it takes window to load
- *
- *  NOTE: Takes 3.1 secs :(
- *        Apparently the delay is because of nvidia driver
- *
+/** @file test_progressbar.c
+ *  @brief progressbar
  */
+#include "components/progressbar.h"
 #include "constants.h" // FPS, WIDTH, HEIGHT
 #include "window.h"
 
@@ -27,9 +24,18 @@ int main()
         frame_start = SDL_GetTicks();
 
         SDL_Event event;
-        while (SDL_PollEvent(&event)) { sdlx_window_update(&w.c, event, &w); }
-
-        sdlx_window_render(&w.c, w.rnd, &w);
+        while (SDL_PollEvent(&event))
+        {
+            switch (event.type)
+            {
+            case SDL_QUIT: w.quit = true; break;
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym)
+                {
+                case SDLK_ESCAPE: w.quit = true; break;
+                }
+            }
+        }
 
         SDL_RenderPresent(w.rnd);
 

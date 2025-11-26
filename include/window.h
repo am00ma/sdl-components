@@ -3,18 +3,25 @@
  */
 #pragma once
 
+#include "component.h"
 #include "types.h" // IWYU pragma: keep
 
 typedef struct
 {
     bool quit; ///< Flag to exit sdl loop
 
-    SDL_Rect      bounds; ///< Dimensions of screen
+    u32           width;  ///< Width of screen
+    u32           height; ///< Height of screen
     SDL_Window*   win;    ///< SDL window
     SDL_Renderer* rnd;    ///< SDL renderer
+
+    sdlx_component_t c;
 
 } sdlx_window_t;
 
 int  sdlx_window_init(sdlx_window_t* w, u32 width, u32 height);
 void sdlx_window_destroy(sdlx_window_t* w);
 void sdlx_window_dump(sdlx_window_t* w);
+
+void sdlx_window_update(sdlx_component_t*, SDL_Event, void*);
+void sdlx_window_render(sdlx_component_t* c, SDL_Renderer* r, void*);
