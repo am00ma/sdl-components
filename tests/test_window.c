@@ -1,24 +1,24 @@
-#include "types.h"
+/** @file test_window.h
+ *  @brief Check how long it takes window to load
+ *
+ *  NOTE: Takes 3.1 secs :(
+ *        Apparently the delay is because of nvidia driver
+ *
+ */
+#include "constants.h" // FPS, WIDTH, HEIGHT
 #include "window.h"
 
 int main()
 {
     int err;
 
-    Timestamp(start);
-
     sdlx_window_t* w;
-    err = sdlx_window_open(&w, 640, 480);
+    err = sdlx_window_open(&w, WIDTH, HEIGHT);
     Goto(err, __close, "Failed: calloc sdlx_window_t* t");
-
-    Timestamp(stop);
-
-    float elapsed = ToSec(stop) - ToSec(start);
-    p_info("sdlx_window_open: %f sec", elapsed);
 
     sdlx_window_dump(w);
 
-    u32 frame_period = (1000 / 60);
+    u32 frame_period = (1000 / FPS);
     u32 frame_start;
     u32 frame_stop;
 
