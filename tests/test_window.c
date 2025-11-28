@@ -6,6 +6,7 @@
  *
  */
 #include "constants.h" // FPS, WIDTH, HEIGHT
+#include "draw.h"
 #include "window.h"
 
 int main()
@@ -31,6 +32,7 @@ int main()
 
         sdlx_window_render(&w.c, w.rnd, &w);
 
+        draw_text(w.rnd, w.fonts.bolditalic, "hello", (SDL_Rect){100, 100, 200, 100}, WHITE);
         SDL_RenderPresent(w.rnd);
 
         frame_stop = SDL_GetTicks() - frame_start;

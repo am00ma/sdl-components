@@ -18,19 +18,10 @@ void draw_filled(SDL_Renderer* r, SDL_Rect rect, SDL_Color color)
     SDL_SetRenderDrawColor(r, 255, 255, 255, 255);
 }
 
-void get_text_texture( //
-    SDL_Renderer* renderer,
-    char*         text,
-    TTF_Font*     font,
-    SDL_Color     color,
-    SDL_Texture** texture,
-    Uint32*       height,
-    Uint32*       width)
+void draw_text(SDL_Renderer* r, FC_Font* font, char* text, SDL_Rect rect, SDL_Color bg)
 {
-    SDL_Surface* surface;
-    surface  = TTF_RenderText_Solid(font, text, color);
-    *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    *width   = surface->w;
-    *height  = surface->h;
-    SDL_FreeSurface(surface);
+    draw_filled(r, rect, bg);
+    SDL_RenderSetClipRect(r, &rect);
+    FC_DrawBox(font, r, rect, text);
+    SDL_RenderSetClipRect(r, NULL);
 }

@@ -15,6 +15,8 @@
 #include <SDL2/SDL_image.h> // IWYU pragma: keep
 #include <SDL2/SDL_ttf.h>   // IWYU pragma: keep
 
+#include "SDL_FontCache.h" // IWYU pragma: keep
+
 typedef enum
 {
 

@@ -1,9 +1,6 @@
 #include "window.h"
-#include "component.h"
 #include "constants.h"
 #include "draw.h"
-#include "style.h"
-#include <SDL2/SDL_ttf.h>
 
 int sdlx_window_init(sdlx_window_t* w, u32 width, u32 height, void* data)
 {
@@ -31,24 +28,28 @@ int sdlx_window_init(sdlx_window_t* w, u32 width, u32 height, void* data)
     SDL_GetRendererInfo(w->rnd, &info);
     p_info("Renderer: %s", info.name);
 
-    err = TTF_Init();
-    Goto(err, __close, "Failed: TTF_Init");
+    SDL_Color black = {0, 0, 0, 255};
 
-    w->fonts.normal = TTF_OpenFont("/usr/share/fonts/TTF/IosevkaNerdFont-Medium.ttf", 24);
-    err             = -(!w->fonts.normal);
+    w->fonts.normal     = FC_CreateFont();
+    w->fonts.italic     = FC_CreateFont();
+    w->fonts.bold       = FC_CreateFont();
+    w->fonts.bolditalic = FC_CreateFont();
+
+    err = !FC_LoadFont(w->fonts.normal, w->rnd, "/usr/share/fonts/TTF/IosevkaNerdFont-Medium.ttf", 24, black,
+                       TTF_STYLE_NORMAL);
     Goto(err, __close, "Failed: TTF_OpenFont: normal");
 
-    w->fonts.italic = TTF_OpenFont("/usr/share/fonts/TTF/IosevkaNerdFont-Italic.ttf", 24);
-    err             = -(!w->fonts.italic);
+    err = !FC_LoadFont(w->fonts.italic, w->rnd, "/usr/share/fonts/TTF/IosevkaNerdFont-Italic.ttf", 24, black,
+                       TTF_STYLE_NORMAL);
     Goto(err, __close, "Failed: TTF_OpenFont: italic");
 
-    w->fonts.bold = TTF_OpenFont("/usr/share/fonts/TTF/IosevkaNerdFont-Bold.ttf", 24);
-    err           = -(!w->fonts.bold);
+    err = !FC_LoadFont(w->fonts.bold, w->rnd, "/usr/share/fonts/TTF/IosevkaNerdFont-Bold.ttf", 24, black,
+                       TTF_STYLE_NORMAL);
     Goto(err, __close, "Failed: TTF_OpenFont: bold");
 
-    w->fonts.bolditalic = TTF_OpenFont("/usr/share/fonts/TTF/IosevkaNerdFont-BoldItalic.ttf", 24);
-    err                 = -(!w->fonts.bolditalic);
-    Goto(err, __close, "Failed: TTF_OpenFont: bold");
+    err = !FC_LoadFont(w->fonts.bolditalic, w->rnd, "/usr/share/fonts/TTF/IosevkaNerdFont-BoldItalic.ttf", 24, black,
+                       TTF_STYLE_NORMAL);
+    Goto(err, __close, "Failed: TTF_OpenFont: bolditalic");
 
     w->c = (sdlx_component_t){
         .update         = sdlx_window_update,
@@ -77,12 +78,11 @@ void sdlx_window_destroy(sdlx_window_t* w)
     if (w->rnd) SDL_DestroyRenderer(w->rnd);
     if (w->win) SDL_DestroyWindow(w->win);
 
-    if (w->fonts.normal) TTF_CloseFont(w->fonts.normal);
-    if (w->fonts.italic) TTF_CloseFont(w->fonts.italic);
-    if (w->fonts.bold) TTF_CloseFont(w->fonts.bold);
-    if (w->fonts.bolditalic) TTF_CloseFont(w->fonts.bolditalic);
+    if (w->fonts.normal) FC_FreeFont(w->fonts.normal);
+    if (w->fonts.italic) FC_FreeFont(w->fonts.italic);
+    if (w->fonts.bold) FC_FreeFont(w->fonts.bold);
+    if (w->fonts.bolditalic) FC_FreeFont(w->fonts.bolditalic);
 
-    TTF_Quit();
     SDL_Quit();
 }
 

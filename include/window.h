@@ -4,7 +4,6 @@
 #pragma once
 
 #include "component.h"
-#include "types.h" // IWYU pragma: keep
 
 typedef struct
 {
@@ -17,10 +16,10 @@ typedef struct
 
     struct
     {
-        TTF_Font* normal;     ///< Font: normal style
-        TTF_Font* italic;     ///< Font: italic style
-        TTF_Font* bold;       ///< Font: bold style
-        TTF_Font* bolditalic; ///< Font: bold italic style
+        FC_Font* normal;     ///< Font: normal style
+        FC_Font* italic;     ///< Font: italic style
+        FC_Font* bold;       ///< Font: bold style
+        FC_Font* bolditalic; ///< Font: bold italic style
 
     } fonts;
 

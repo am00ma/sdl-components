@@ -4,25 +4,12 @@
 #pragma once
 
 #include "component.h"
-#include "types.h" // IWYU pragma: keep
-
-typedef void (*sdlx_list_item_to_text_fn)( //
-    void*             item,
-    char*             text,
-    isize*            len,
-    SDL_Color*        color,
-    sdlx_fontstyle_t* fontstyle);
 
 typedef struct
 {
 
-    void* items;
-
-    sdlx_list_item_to_text_fn item_to_text;
-
-    SDL_Texture** textures;
-    u32*          widths;
-    u32*          heights;
+    void*          items;
+    RenderCallback render_item;
 
     isize num_items;
     isize items_per_page;
