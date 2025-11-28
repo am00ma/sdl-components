@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=/usr/lib
+includedir=/usr/include
+
+Name: SDL_FontCache
+Description:  A generic font caching C library with loading and rendering support for SDL.
+Version: 0.1.0
+Requires: SDL2_ttf
+Libs: -L/usr/lib -lSDL_FontCache
+Cflags: -I/usr/include

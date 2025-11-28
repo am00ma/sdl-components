@@ -72,7 +72,7 @@ include(FindPkgConfig)
 pkg_search_module(SDL2      REQUIRED sdl2)
 pkg_search_module(SDL2TTF   REQUIRED SDL2_ttf)
 pkg_search_module(SDL2IMAGE REQUIRED SDL2_image)
-# add_subdirectory(ext/SDL_FontCache)
+add_subdirectory(ext/SDL_FontCache)
 
 # =========================================================================
 #                     Common
@@ -84,11 +84,14 @@ set(LIB_SOURCES
 
     ${CMAKE_SOURCE_DIR}/src/components/progressbar.c
 )
-set(LIB_INCLUDES ${CMAKE_SOURCE_DIR}/include)
+set(LIB_INCLUDES
+  ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}/ext/SDL_FontCache)
 set(LIB_LIBS
   ${SDL2_LIBRARIES}
   ${SDL2IMAGE_LIBRARIES}
-  ${SDL2TTF_LIBRARIES})
+  ${SDL2TTF_LIBRARIES}
+  FontCache)
 
 set(LIB_C_FLAGS
     PRIVATE
