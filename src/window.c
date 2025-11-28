@@ -3,6 +3,7 @@
 #include "constants.h"
 #include "draw.h"
 #include "style.h"
+#include <SDL2/SDL_ttf.h>
 
 int sdlx_window_init(sdlx_window_t* w, u32 width, u32 height, void* data)
 {
@@ -30,6 +31,25 @@ int sdlx_window_init(sdlx_window_t* w, u32 width, u32 height, void* data)
     SDL_GetRendererInfo(w->rnd, &info);
     p_info("Renderer: %s", info.name);
 
+    err = TTF_Init();
+    Goto(err, __close, "Failed: TTF_Init");
+
+    w->fonts.normal = TTF_OpenFont("/usr/share/fonts/TTF/IosevkaNerdFont-Medium.ttf", 24);
+    err             = -(!w->fonts.normal);
+    Goto(err, __close, "Failed: TTF_OpenFont: normal");
+
+    w->fonts.italic = TTF_OpenFont("/usr/share/fonts/TTF/IosevkaNerdFont-Italic.ttf", 24);
+    err             = -(!w->fonts.italic);
+    Goto(err, __close, "Failed: TTF_OpenFont: italic");
+
+    w->fonts.bold = TTF_OpenFont("/usr/share/fonts/TTF/IosevkaNerdFont-Bold.ttf", 24);
+    err           = -(!w->fonts.bold);
+    Goto(err, __close, "Failed: TTF_OpenFont: bold");
+
+    w->fonts.bolditalic = TTF_OpenFont("/usr/share/fonts/TTF/IosevkaNerdFont-BoldItalic.ttf", 24);
+    err                 = -(!w->fonts.bolditalic);
+    Goto(err, __close, "Failed: TTF_OpenFont: bold");
+
     w->c = (sdlx_component_t){
         .update         = sdlx_window_update,
         .render         = sdlx_window_render,
@@ -56,6 +76,13 @@ void sdlx_window_destroy(sdlx_window_t* w)
 
     if (w->rnd) SDL_DestroyRenderer(w->rnd);
     if (w->win) SDL_DestroyWindow(w->win);
+
+    if (w->fonts.normal) TTF_CloseFont(w->fonts.normal);
+    if (w->fonts.italic) TTF_CloseFont(w->fonts.italic);
+    if (w->fonts.bold) TTF_CloseFont(w->fonts.bold);
+    if (w->fonts.bolditalic) TTF_CloseFont(w->fonts.bolditalic);
+
+    TTF_Quit();
     SDL_Quit();
 }
 

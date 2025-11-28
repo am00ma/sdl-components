@@ -15,6 +15,15 @@ typedef struct
     SDL_Window*   win;    ///< SDL window
     SDL_Renderer* rnd;    ///< SDL renderer
 
+    struct
+    {
+        TTF_Font* normal;     ///< Font: normal style
+        TTF_Font* italic;     ///< Font: italic style
+        TTF_Font* bold;       ///< Font: bold style
+        TTF_Font* bolditalic; ///< Font: bold italic style
+
+    } fonts;
+
     sdlx_component_t c;
 
     // User data to pass to components
