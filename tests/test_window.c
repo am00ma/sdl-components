@@ -5,9 +5,9 @@
  *        Apparently the delay is because of nvidia driver
  *
  */
-#include "constants.h" // FPS, WIDTH, HEIGHT
-#include "draw.h"
-#include "window.h"
+#include "sdlx/constants.h" // FPS, WIDTH, HEIGHT
+#include "sdlx/draw.h"
+#include "sdlx/window.h"
 
 int main()
 {

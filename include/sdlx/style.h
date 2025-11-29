@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "types.h" // IWYU pragma: keep
+#include "sdlx/types.h" // IWYU pragma: keep
 
 typedef struct
 {

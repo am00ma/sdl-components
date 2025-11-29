@@ -1,4 +1,4 @@
-#include "components/list.h"
+#include "sdlx/components/list.h"
 
 int sdlx_list_init(sdlx_list_t* li, void* items, isize num_items, isize items_per_page)
 {

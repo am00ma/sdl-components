@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "style.h"
+#include "sdlx/style.h"
 
 typedef struct sdlx_component_t sdlx_component_t;
 

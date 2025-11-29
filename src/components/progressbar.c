@@ -1,5 +1,5 @@
-#include "components/progressbar.h"
-#include "draw.h"
+#include "sdlx/components/progressbar.h"
+#include "sdlx/draw.h"
 
 void sdlx_progressbar_update(sdlx_component_t* c, SDL_Event, void*)
 {

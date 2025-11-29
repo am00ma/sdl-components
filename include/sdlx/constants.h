@@ -1,6 +1,6 @@
 #pragma once
 
-#include "types.h"
+#include "sdlx/types.h"
 
 constexpr isize FPS    = 60;
 constexpr isize WIDTH  = 640;

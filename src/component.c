@@ -1,4 +1,4 @@
-#include "component.h"
+#include "sdlx/component.h"
 
 void sdlx_component_init(sdlx_component_t* t, SDL_Rect bounds, sdlx_style_t style)
 {

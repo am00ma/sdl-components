@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 #                       Project
 # =========================================================================
 project(
-    "sdl-components"
+    "sdl-extensions"
     VERSION 0.0.1
     DESCRIPTION "Extensions to sdl2 for components"
     LANGUAGES C)
@@ -102,7 +102,7 @@ set(LIB_C_FLAGS
     -pedantic
     -fdiagnostics-color=always)
 
-set(LIB_NAME sdlc)
+set(LIB_NAME sdlx)
 add_library(${LIB_NAME} STATIC)
 target_link_libraries(${LIB_NAME} PUBLIC ${LIB_LIBS})
 target_sources(${LIB_NAME} PRIVATE ${LIB_SOURCES})

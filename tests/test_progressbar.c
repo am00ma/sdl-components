@@ -5,9 +5,9 @@
  *        Apparently the delay is because of nvidia driver
  *
  */
-#include "components/progressbar.h" // sdlx_progressbar_t
-#include "constants.h"              // FPS, WIDTH, HEIGHT
-#include "window.h"
+#include "sdlx/components/progressbar.h" // sdlx_progressbar_t
+#include "sdlx/constants.h"              // FPS, WIDTH, HEIGHT
+#include "sdlx/window.h"
 
 int main()
 {

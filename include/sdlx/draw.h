@@ -1,6 +1,6 @@
 #pragma once
 
-#include "types.h" // IWYU pragma: keep
+#include "sdlx/types.h" // IWYU pragma: keep
 
 void draw_rect(SDL_Renderer* r, SDL_Rect rect, SDL_Color color);
 void draw_filled(SDL_Renderer* r, SDL_Rect rect, SDL_Color color);

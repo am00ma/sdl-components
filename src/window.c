@@ -1,6 +1,6 @@
-#include "window.h"
-#include "constants.h"
-#include "draw.h"
+#include "sdlx/window.h"
+#include "sdlx/constants.h"
+#include "sdlx/draw.h"
 
 int sdlx_window_init(sdlx_window_t* w, u32 width, u32 height, void* data)
 {

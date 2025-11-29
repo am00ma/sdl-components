@@ -1,4 +1,4 @@
-#include "draw.h"
+#include "sdlx/draw.h"
 
 void draw_rect(SDL_Renderer* r, SDL_Rect rect, SDL_Color color)
 {
